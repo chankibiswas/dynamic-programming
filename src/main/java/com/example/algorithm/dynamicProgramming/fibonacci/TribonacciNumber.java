@@ -1,4 +1,4 @@
-package com.example.algorithm.dynamicProgramming.random;
+package com.example.algorithm.dynamicProgramming.fibonacci;
 
 import java.util.HashMap;
 import java.util.Map;
