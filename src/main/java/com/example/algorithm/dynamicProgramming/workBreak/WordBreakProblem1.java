@@ -27,8 +27,8 @@ public class WordBreakProblem1 {
     private final Map<String, Boolean> dp = new HashMap<>();
 
     public static void main(String[] st) {
-        String s = "catsandog";
-        List<String> wordDict = Arrays.asList("cats", "dog", "sand", "and", "cat");
+        String s = "catsanddog";
+        List<String> wordDict = Arrays.asList("cat", "cats", "and", "sand", "dog");
         System.out.println(new WordBreakProblem1().wordBreak2(s, wordDict));
     }
 
@@ -50,14 +50,17 @@ public class WordBreakProblem1 {
         }
         boolean result = false;
         for (int i = 1; i < s.length(); i++) {
-            boolean b1 = wordBreak(s.substring(0, i), wordDict);
-            dp.put(s.substring(0, i), b1);
-            boolean b2 = wordBreak(s.substring(i), wordDict);
-            dp.put(s.substring(i), b2);
-            dp.put(s, b1 && b2);
-            result = b1 && b2;
-            if (result) {
-                break;
+            // Check if first part is valid word, then only move to later part
+            boolean b1 = wordDict.contains(s.substring(0, i));
+            if (b1) {
+                dp.put(s.substring(0, i), b1);
+                boolean b2 = wordDict.contains(s.substring(i)) || wordBreak(s.substring(i), wordDict);
+                dp.put(s.substring(i), b2);
+                dp.put(s, b1 && b2);
+                result = b1 && b2;
+                if (result) {
+                    break;
+                }
             }
         }
         return result;
