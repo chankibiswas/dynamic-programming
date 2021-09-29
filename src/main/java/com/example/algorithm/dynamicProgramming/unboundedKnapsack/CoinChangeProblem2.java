@@ -33,16 +33,6 @@ public class CoinChangeProblem2 {
             dp[i][0] = 0;
         }
 
-        // Initialize 2nd row. This way is special for this program
-        // Commenting out currently as this step seems redundant
-        /*for (int j = 1; j < v + 1; j++) {
-            if (j % coin[0] == 0) {
-                dp[1][j] = j / coin[0];
-            } else {
-                dp[1][j] = max;
-            }
-        }*/
-
         for (int i = 1; i < coin.length + 1; i++) {
             for (int j = 1; j < v + 1; j++) {
                 if (coin[i - 1] <= j) {
