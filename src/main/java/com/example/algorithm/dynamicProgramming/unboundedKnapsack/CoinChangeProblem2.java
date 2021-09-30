@@ -1,5 +1,7 @@
 package com.example.algorithm.dynamicProgramming.unboundedKnapsack;
 
+import java.util.Arrays;
+
 /*
 Coin Change Problem to give minimum numbers of coins
 Given a value V, if we want to make change for V cents, and we have infinite supply of each of C = { C1, C2, .. , Cm}
@@ -16,6 +18,28 @@ public class CoinChangeProblem2 {
         final int[] coin = {9, 6, 5, 1};
         final int v = 11;
         System.out.println(new CoinChangeProblem2().minimumCoinChangeToGiveValue(coin, v));
+    }
+
+    /*
+    This is the most time and space efficient method for the same problem here
+     */
+    public int coinChange(int[] coins, int amount) {
+        if (amount == 0) {
+            return 0;
+        }
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+
+        for (int i = 0; i < coins.length; i++) {
+            for (int j = 1; j <= amount; j++) {
+                if (coins[i] <= j) {
+                    dp[j] = Math.min(dp[j], 1 + dp[j - coins[i]]);
+                }
+            }
+        }
+
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 
     public int minimumCoinChangeToGiveValue(final int[] coin, final int v) {
